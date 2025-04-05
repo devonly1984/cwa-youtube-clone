@@ -8,6 +8,7 @@ interface HomePageProps {
 const HomePage = async ({searchParams}:HomePageProps) => {
   const { categoryId } = await searchParams;
   void trpc.categories.getMany.prefetch();
+
   return (
     <HydrateClient>
       <HomeView categoryId={categoryId} />

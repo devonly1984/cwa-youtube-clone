@@ -4,6 +4,7 @@ import "./globals.css";
 import { ReactNode } from "react";
 import {ClerkProvider} from '@clerk/nextjs'
 import { TRPCProvider } from "@/trpc/client";
+import { Toaster } from "sonner";
 
 const inter = Inter({subsets: ['latin']})
 export const metadata: Metadata = {
@@ -20,7 +21,10 @@ const  RootLayout=({
     <ClerkProvider afterSignOutUrl={"/"}>
       <html lang="en">
         <body className={inter.className}>
-          <TRPCProvider>{children}</TRPCProvider>
+          <TRPCProvider>
+            <Toaster />
+            {children}
+          </TRPCProvider>
         </body>
       </html>
     </ClerkProvider>

@@ -64,7 +64,7 @@ useEffect(() => {
               onClick={() => onSelect(null)}
             >
               <Badge
-                variant={value ? "default" : "secondary"}
+                variant={value === null ? "default" : "secondary"}
                 className="rounded-lg px-3 py-1 cursor-pointer whitespace-nowrap text-sm"
               >
                 All
@@ -87,7 +87,7 @@ useEffect(() => {
                 onClick={() => onSelect(item.value)}
               >
                 <Badge
-                  variant={value ? "default" : "secondary"}
+                  variant={value === item.value ? "default" : "secondary"}
                   className="rounded-lg px-3 py-1 cursor-pointer whitespace-nowrap text-sm"
                 >
                   {item.label}

@@ -2,7 +2,7 @@ import CategoriesSection from "@/components/sections/home/CategoriesSection";
 import VideosSection from "@/components/sections/home/VideosSection";
 
 interface HomeViewProps {
-    categoryId?:string;
+  categoryId?: string;
 }
 const HomeView = ({ categoryId }: HomeViewProps) => {
   return (
@@ -12,4 +12,4 @@ const HomeView = ({ categoryId }: HomeViewProps) => {
     </div>
   );
 };
-export default HomeView
+export default HomeView;
