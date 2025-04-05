@@ -17,7 +17,7 @@ const  RootLayout=({
   children: ReactNode;
 }>) =>{
   return (
-    <ClerkProvider>
+    <ClerkProvider afterSignOutUrl={"/"}>
       <html lang="en">
         <body className={inter.className}>
           <TRPCProvider>{children}</TRPCProvider>

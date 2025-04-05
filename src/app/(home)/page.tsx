@@ -1,4 +1,17 @@
-const HomePage = () => {
-  return <div>Videos Loading soon...</div>;
+import HomeView from "@/components/views/home/HomeView";
+import { HydrateClient, trpc } from "@/trpc/server";
+
+export const dynamic = "force-dynamic";
+interface HomePageProps {
+  searchParams: Promise<{categoryId:string}>
+}
+const HomePage = async ({searchParams}:HomePageProps) => {
+  const { categoryId } = await searchParams;
+  void trpc.categories.getMany.prefetch();
+  return (
+    <HydrateClient>
+      <HomeView categoryId={categoryId} />
+    </HydrateClient>
+  );
 };
 export default HomePage;

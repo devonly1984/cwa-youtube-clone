@@ -41,3 +41,19 @@ export const personalItems = [
     icon: ListVideoIcon,
   },
 ];
+export const categoryNames = [
+  "Cars and vehicles",
+  "Comedy",
+  "Education",
+  "Gaming",
+  "Entertainment",
+  "Film and animation",
+  "How-to and style",
+  "Music",
+  "News and politics",
+  "People and blogs",
+  "Science and technology",
+  "Sports",
+  "Travel and events",
+  "Pets and animals",
+];

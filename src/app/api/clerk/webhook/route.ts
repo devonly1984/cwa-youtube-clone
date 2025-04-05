@@ -1,6 +1,9 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
+import { db } from '@/db'
+import { users } from '@/db/schema'
+import { eq } from 'drizzle-orm'
 
 export async function POST(req: Request) {
   const SIGNING_SECRET = process.env.SIGNING_SECRET
@@ -47,12 +50,33 @@ export async function POST(req: Request) {
 
   // Do something with payload
   // For this guide, log payload to console
-  const { id } = evt.data
+  
   const eventType = evt.type
 switch (eventType) {
   case 'user.created': 
-  console.log(id);
+  await db.insert(users).values({
+    clerkId: evt.data.id,
+    name: `${evt.data.first_name} ${evt.data.last_name}`,
+    imageUrl: evt.data.image_url,
+
+  });
+
   break;
+  case 'user.deleted': 
+  if (!evt.data.id) {
+    return new Response("Clerk Id not available", { status: 400 });
+  }
+  await db.delete(users).where(eq(users.clerkId, evt.data.id));
+  break;
+  case 'user.updated':
+    await db
+      .update(users)
+      .set({
+        name: `${evt.data.first_name} ${evt.data.last_name}`,
+        imageUrl: evt.data.image_url,
+      })
+      .where(eq(users.clerkId, evt.data.id));
+    break;
   default:
     break;
 }
