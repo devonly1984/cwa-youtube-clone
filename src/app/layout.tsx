@@ -19,7 +19,7 @@ const  RootLayout=({
     <ClerkProvider>
     <html lang="en">
       <body
-        className={`${inter.className} antialiased`}
+        className={inter.className}
       >
         {children}
       </body>
