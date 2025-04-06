@@ -16,4 +16,9 @@ export const config = {
     currentSigning: process.env.QSTASH_CURRENT_SIGNING_KEY,
     nextSigning: process.env.QSTASH_NEXT_SIGNING_KEY,
   },
+  mux: {
+    tokenId: process.env.MUX_TOKEN_ID,
+    secretKey: process.env.MUX_SECRET_KEY,
+    whsec:process.env.MUX_SIGNING_SECRET
+  }
 };

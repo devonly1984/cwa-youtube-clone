@@ -5,6 +5,7 @@ export const LOGO_IMG='/logo.svg'
 export const FALLBACK_IMG="/placeholder.svg"
 export const USER_FALLBACK='/user-placeholder.svg'
 export const DEFAULT_LIMIT = 5
+export const UPLOADER_ID='video-uploader'
 export const items = [
   {
     title: "Home",
