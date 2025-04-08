@@ -1,11 +1,15 @@
 "use client";
 import { UseFormReturn } from "react-hook-form";
-import { FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
 
 import { SelectTrigger } from "@radix-ui/react-select";
 import { trpc } from "@/trpc/client";
-
 interface SelectFormProps {
   form: UseFormReturn;
 }

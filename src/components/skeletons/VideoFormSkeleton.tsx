@@ -1,4 +1,4 @@
 const VideoFormSkeleton = () => {
-  return <p>Loading</p>;
+  return <></>
 }
 export default VideoFormSkeleton

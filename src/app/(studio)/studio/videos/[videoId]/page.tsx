@@ -2,10 +2,10 @@ import VideoView from "@/components/views/videos/VideoView";
 import { HydrateClient, trpc } from "@/trpc/server";
 export const dynamic = 'force-dynamic'
 
-interface VideoPageProps {
+interface SingleVideoProps {
   params: Promise<{ videoId: string }>;
 }
-const VideoPage = async ({ params }: VideoPageProps) => {
+const SingleVideoPage = async ({ params }: SingleVideoProps) => {
   const { videoId } = await params;
   void trpc.studio.getOne.prefetch({ id: videoId });
   void trpc.categories.getMany.prefetch();
@@ -15,4 +15,4 @@ const VideoPage = async ({ params }: VideoPageProps) => {
     </HydrateClient>
   );
 };
-export default VideoPage;
+export default SingleVideoPage;

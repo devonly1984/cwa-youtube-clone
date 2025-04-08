@@ -5,8 +5,10 @@ import { Loader2Icon, PlusIcon } from "lucide-react";
 import { toast } from "sonner";
 import ResponsiveModal from "./ResponsiveModal";
 import UploaderModal from "./UploaderModal";
+import { useRouter } from "next/navigation";
 
 const UploadModal = () => {
+  const router = useRouter();
   const utils = trpc.useUtils();  
   const create = trpc.videos.create.useMutation({
     onSuccess: ()=>{
@@ -17,6 +19,13 @@ const UploadModal = () => {
       toast.error("Something went wrong", { description: error.message });
     }
   })
+  const onSuccess = ()=>{
+    if (!create.data?.video.id) {
+      return;
+    }
+    create.reset();
+    router.push(`/studio/videos/${create.data.video.id}`);
+  }
   return (
     <>
       <ResponsiveModal
@@ -25,7 +34,7 @@ const UploadModal = () => {
         onOpenChange={() => create.reset()}
       >
         {create.data?.url ? (
-          <UploaderModal endpoint={create.data?.url} onSuccess={() => {}} />
+          <UploaderModal endpoint={create.data?.url} onSuccess={onSuccess} />
         ) : (
           <Loader2Icon className="animate-spin" />
         )}

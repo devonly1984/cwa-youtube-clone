@@ -6,6 +6,7 @@ export const FALLBACK_IMG="/placeholder.svg"
 export const USER_FALLBACK='/user-placeholder.svg'
 export const DEFAULT_LIMIT = 5
 export const UPLOADER_ID='video-uploader'
+export const BASE_URL = `${process.env.VERCEL_URL || "http://localhost:3000"}/videos`;
 export const items = [
   {
     title: "Home",

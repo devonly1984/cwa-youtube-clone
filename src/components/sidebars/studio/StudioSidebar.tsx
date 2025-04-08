@@ -17,7 +17,7 @@ const StudioSidebar = () => {
             <StudioSidebarHeader />
             <SidebarMenuItem>
               <SidebarMenuButton tooltip={"Content"} asChild>
-                <Link href="/studio/videos">
+                <Link href="/studio/">
                   <VideoIcon className="size-5" />
                   <span className="text-sm">Content</span>
                 </Link>
