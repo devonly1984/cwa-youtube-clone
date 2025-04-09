@@ -7,8 +7,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
 } from "@/components/ui/dropdown-menu";
+import { trpc } from "@/trpc/client";
 
 import { ImagePlusIcon, MoreVerticalIcon, RotateCcw, SparklesIcon } from "lucide-react";
+import { toast } from "sonner";
 interface ThumbnailDropdownProps {
     open:boolean;
     onOpenChange:(open:boolean)=>void;
@@ -19,6 +21,28 @@ const ThumbnailDropdown = ({
   onOpenChange,
   videoId,
 }: ThumbnailDropdownProps) => {
+  const utils = trpc.useUtils();
+  const generateThumbnail = trpc.videos.generateThumbnail.useMutation({
+    onSuccess:()=>{
+    
+      toast.success("Background Job started", {
+        description: "This make some time",
+      });
+    },
+    onError:()=>{
+      toast.error("Something went wrong");
+    }
+  })
+  const restoreThumbnail = trpc.videos.restoreThumbnail.useMutation({
+    onSuccess:()=>{
+      utils.studio.getMany.invalidate();
+      utils.studio.getOne.invalidate({ id: videoId });
+      toast.success("Thumbnail Restored ");
+    },
+    onError:()=>{
+      toast.error("Something went wrong");
+    }
+  })
   
   return (
     <>
@@ -43,11 +67,15 @@ const ThumbnailDropdown = ({
             <ImagePlusIcon className="size-4 mr-1" />
             Change
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => generateThumbnail.mutate({ id: videoId })}
+          >
             <SparklesIcon className="size-4 mr-1" />
             Ai Generated
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => restoreThumbnail.mutate({ id: videoId })}
+          >
             <RotateCcw className="size-4 mr-1" />
             Restore
           </DropdownMenuItem>

@@ -1,11 +1,88 @@
 import { db } from "@/db";
-import { videos, videoUpdateSchema } from "@/db/schema";
+import { users, videos, videoUpdateSchema } from "@/db/schema";
 import { mux } from "@/lib/mux";
-import {  createTRPCRouter, protectedProcedure } from "@/trpc/init";
+import { workflow } from "@/lib/qstash";
+import {  baseProcedure, createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
-import { and, eq } from "drizzle-orm";
+import { and, eq, getTableColumns } from "drizzle-orm";
+import { UTApi } from "uploadthing/server";
 import {z} from 'zod';
 export const videosRouter = createTRPCRouter({
+  getOne: baseProcedure.input(z.object({id:z.string().uuid()})).query(async({input})=>{
+    const [existingVideo] = await db
+      .select({
+        ...getTableColumns(videos),
+        user: {
+          ...getTableColumns(users),
+        },
+      })
+      .from(videos)
+      .innerJoin(users, eq(videos.userId, users.id))
+      .where(eq(videos.id, input.id));
+      
+    if (!existingVideo) {
+      throw new TRPCError({code:"NOT_FOUND"})
+    }
+    return existingVideo;
+  }),
+  generateThumbnail: protectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { id: userId } = ctx.user;
+      const { workflowRunId } = await workflow.trigger({
+        url: `${process.env.QSTASH_WORKFLOW_URL}/api/videos/workflows/title`,
+        body: { userId, videoId: input.id },
+        retries: 3,
+      });
+      return workflowRunId;
+    }),
+  restoreThumbnail: protectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { id: userId } = ctx.user;
+      const [existingVideo] = await db
+        .select()
+        .from(videos)
+        .where(and(eq(videos.id, input.id), eq(videos.userId, userId)));
+      if (!existingVideo) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+      if (existingVideo.thumbnailKey) {
+        const utapi = new UTApi();
+        await utapi.deleteFiles(existingVideo.thumbnailKey);
+        await db
+          .update(videos)
+          .set({
+            thumbnailKey: null,
+            thumbnailUrl: null,
+          })
+          .where(and(eq(videos.id, input.id), eq(videos.userId, userId)));
+      }
+      if (!existingVideo.muxPlaybackId) {
+        throw new TRPCError({ code: "BAD_REQUEST" });
+      }
+
+      const tempthumbnailUrl = `https://image.mux.com/${existingVideo.muxPlaybackId}/thumbnail.jpg`;
+      const utapi = new UTApi();
+      const uploadedThumbnail =
+        await utapi.uploadFilesFromUrl(tempthumbnailUrl);
+      if (!uploadedThumbnail.data) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+
+      const { key: thumbnailKey, ufsUrl: thumbnailUrl } =
+        uploadedThumbnail?.data;
+      const [updatedVideo] = await db
+        .update(videos)
+        .set({
+          thumbnailUrl,
+          thumbnailKey,
+        })
+        .where(and(eq(videos.id, input.id), eq(videos.userId, userId)))
+        .returning();
+
+      return updatedVideo;
+    }),
   remove: protectedProcedure
     .input(
       z.object({
