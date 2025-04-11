@@ -4,8 +4,9 @@ import { cn } from "@/lib/utils";
 import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import VideoBanner from "@/components/sections/videos/VideoBanner";
-import Video_VideoTopRow from "./VideoTopRow";
+import {VideoBanner,VideoTopRow} from '@/components/subsections/videos'
+import { toast } from "sonner";
+import { useAuth } from "@clerk/nextjs";
 
 interface VideosSectionProps {
   videoId: string;
@@ -20,7 +21,21 @@ const VideosSection = ({ videoId }: VideosSectionProps) => {
   );
 };
 const VideoSectionSuspense = ({ videoId }: VideosSectionProps) => {
+  const {isSignedIn} = useAuth()
+  const utils = trpc.useUtils()
   const [video] = trpc.videos.getOne.useSuspenseQuery({ id: videoId });
+  const createView = trpc.videoViews.create.useMutation({
+    onSuccess: ()=>{
+      utils.videos.getOne.invalidate({id:videoId})
+    },
+    onError:(error)=>{
+      toast.error("Something went wrong",{description: error.message})
+    }
+  })
+  const handlePlay = ()=>{
+    if (!isSignedIn) return;
+    createView.mutate({ videoId})
+  }
   return (
     <>
       <div
@@ -31,14 +46,14 @@ const VideoSectionSuspense = ({ videoId }: VideosSectionProps) => {
       >
         <VideoPlayer
           autoPlay
-          onPlay={() => {}}
+          onPlay={handlePlay}
           playbackId={video.muxPlaybackId}
           thumbnailUrl={video.thumbnailUrl}
         />
         {JSON.stringify(video)}
       </div>
       <VideoBanner status={video.muxStatus} />
-      <Video_VideoTopRow video={video} />
+      <VideoTopRow video={video} />
     </>
   );
 };

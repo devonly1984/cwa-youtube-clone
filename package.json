@@ -6,7 +6,9 @@
     "dev": "next dev ",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "webhook": "ngrok http --url=rested-redbird-trivially.ngrok-free.app 3000",
+    "dev:all": "concurrently \"bun dev\" && \"bun webhook\""
   },
   "dependencies": {
     "@clerk/nextjs": "^6.14.1",

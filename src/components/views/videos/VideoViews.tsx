@@ -1,3 +1,4 @@
+import {CommentSection,SuggestionsSection} from '@/components/subsections/videos'
 import VideosSection from "@/components/sections/videos/Video_VideosSection";
 
 
@@ -12,6 +13,13 @@ const VideoViews = ({ videoId }: VideoViewsProps) => {
       <div className="flex flex-col xl:flex-row gap-6">
         <div className="flex-1 min-w-0">
           <VideosSection videoId={videoId} />
+          <div className="xl:hidden block mt-4">
+            <SuggestionsSection/>
+          </div>
+          <CommentSection/>
+        </div>
+        <div className="hidden xl:block w-full xl:w-[380px] 2xl:w-[460px] shrink-1">
+          <SuggestionsSection/>
         </div>
       </div>
     </div>

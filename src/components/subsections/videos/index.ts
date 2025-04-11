@@ -1,0 +1,7 @@
+export {default as CommentSection} from './CommentSection'
+export {default as SuggestionsSection} from './SuggestionsSection'
+export {default as VideoBanner} from './VideoBanner'
+export {default as VideoDescription} from './VideoDescription'
+export {default as VideoOwner} from './VideoOwner'
+export {default as VideoReactions} from './VideoReactions'
+export {default as VideoTopRow} from './VideoTopRow'

@@ -6,13 +6,20 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { BASE_URL } from "@/constants";
 import { ListPlusIcon, MoreVerticalIcon, ShareIcon, Trash2Icon } from "lucide-react";
+import { toast } from "sonner";
+
 interface VideoMenuProps {
   videoId: string;
   variant?: "ghost" | "secondary";
   onRemove?: () => void;
 }
 const VideoMenu = ({ videoId, variant, onRemove }: VideoMenuProps) => {
+  const onShare = ()=>{
+    navigator.clipboard.writeText(`${BASE_URL}/${videoId}`)
+    toast.success("Link copied to the clipboard")
+  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -21,7 +28,7 @@ const VideoMenu = ({ videoId, variant, onRemove }: VideoMenuProps) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
-        <DropdownMenuItem onClick={() => {}}>
+        <DropdownMenuItem onClick={onShare}>
           <ShareIcon className="mr-2 size-4" />
           Share
         </DropdownMenuItem>
