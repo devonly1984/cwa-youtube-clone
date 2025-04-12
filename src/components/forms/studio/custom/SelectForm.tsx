@@ -1,5 +1,5 @@
 "use client";
-import { UseFormReturn } from "react-hook-form";
+import { Control } from "react-hook-form";
 import {
   FormControl,
   FormField,
@@ -11,13 +11,13 @@ import { Select, SelectContent, SelectItem, SelectValue } from "@/components/ui/
 import { SelectTrigger } from "@radix-ui/react-select";
 import { trpc } from "@/trpc/client";
 interface SelectFormProps {
-  form: UseFormReturn;
+  control: Control;
 }
-const SelectForm = ({ form }: SelectFormProps) => {
+const SelectForm = ({ control }: SelectFormProps) => {
     const [categories] = trpc.categories.getMany.useSuspenseQuery();
   return (
     <FormField
-      control={form.control}
+      control={control}
       name="categoryId"
       render={({ field }) => (
         <FormItem>

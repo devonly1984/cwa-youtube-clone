@@ -1,8 +1,6 @@
-import { ReactNode } from "react";
 import { HomeLayout } from "@/components/layouts/home/HomeLayout";
-interface LayoutProps {
-  children: ReactNode;
-}
+import { LayoutProps } from "@/types";
+
 const Layout = ({ children }: LayoutProps) => {
   return <HomeLayout>{children}</HomeLayout>;
 };

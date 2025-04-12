@@ -1,4 +1,4 @@
-import { UseFormReturn } from "react-hook-form";
+import { Control } from "react-hook-form";
 import {
   FormControl,
   FormField,
@@ -15,12 +15,12 @@ import {
 import { Globe2Icon, LockIcon } from "lucide-react";
 
 interface VisibilityFormProps {
-     form: UseFormReturn;
+  control: Control;
 }
-const VisibilityForm = ({form}:VisibilityFormProps) => {
+const VisibilityForm = ({ control }: VisibilityFormProps) => {
   return (
     <FormField
-      control={form.control}
+      control={control}
       name="visibility"
       render={({ field }) => (
         <FormItem>
@@ -53,5 +53,5 @@ const VisibilityForm = ({form}:VisibilityFormProps) => {
       )}
     />
   );
-}
-export default VisibilityForm
+};
+export default VisibilityForm;

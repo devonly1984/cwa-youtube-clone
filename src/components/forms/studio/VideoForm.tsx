@@ -102,11 +102,11 @@ const onCopy = async ()=>{
                 name="description"
                 placeholder="Enter a Description"
               />
-              <SelectForm form={form} />
+              <SelectForm control={form.control} />
               {/**Thumbnail field */}
               <ThumbnailUploader
-              videoId={video.id}
-                form={form}
+                videoId={video.id}
+                control={form.control}
                 thumbnailUrl={video.thumbnailUrl ?? FALLBACK_IMG}
               />
             </div>
@@ -152,7 +152,7 @@ const onCopy = async ()=>{
                   />
                 </div>
               </div>
-              <VisibilityForm form={form} />
+              <VisibilityForm control={form.control} />
             </div>
           </div>
         </form>

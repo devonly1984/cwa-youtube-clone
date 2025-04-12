@@ -1,7 +1,8 @@
 import StudioLayout from "@/components/layouts/studio/StudioLayout"
-import { ReactNode } from "react"
+import { LayoutProps } from "@/types";
 
-const Layout = ({ children }: { children: ReactNode }) => {
+
+const Layout = ({ children }: LayoutProps) => {
   return <StudioLayout>{children}</StudioLayout>;
 };
 export default Layout

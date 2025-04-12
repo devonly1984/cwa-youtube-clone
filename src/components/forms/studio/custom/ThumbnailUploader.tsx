@@ -1,4 +1,4 @@
-import { UseFormReturn } from "react-hook-form"
+import { Control, } from "react-hook-form"
 import {
   FormControl,
   FormField,
@@ -11,15 +11,15 @@ import { useState } from "react";
 
 interface ThumbnailUploaderProps {
   videoId:string;
-    form: UseFormReturn;
+   control:Control
     thumbnailUrl:string;
 }
-const ThumbnailUploader = ({videoId,form,thumbnailUrl}:ThumbnailUploaderProps) => {
+const ThumbnailUploader = ({videoId,control,thumbnailUrl}:ThumbnailUploaderProps) => {
   const [isThumbnailModalOpen, setIsThumbnailModalOpen] = useState(false)
   return (
     <FormField
       name="thumbnailUrl"
-      control={form.control}
+      control={control}
       render={() => (
         <FormItem>
           <FormLabel>Thumbnail</FormLabel>

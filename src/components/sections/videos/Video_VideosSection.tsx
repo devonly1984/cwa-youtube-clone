@@ -7,13 +7,14 @@ import { ErrorBoundary } from "react-error-boundary";
 import {VideoBanner,VideoTopRow} from '@/components/subsections/videos'
 import { toast } from "sonner";
 import { useAuth } from "@clerk/nextjs";
+import VideoSectionSkeleton from "@/components/skeletons/VideoSectionSkeleton";
 
 interface VideosSectionProps {
   videoId: string;
 }
 const VideosSection = ({ videoId }: VideosSectionProps) => {
   return (
-    <Suspense fallback={<>Loading...</>}>
+    <Suspense fallback={<VideoSectionSkeleton />}>
       <ErrorBoundary fallback={<></>}>
         <VideoSectionSuspense videoId={videoId} />
       </ErrorBoundary>
