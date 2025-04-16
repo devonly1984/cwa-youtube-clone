@@ -1,18 +1,25 @@
 "use client";
 
 import { SearchIcon, XIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { Button } from "../ui/button";
 
 const SearchInput = () => {
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState("");
+  const searchParams = useSearchParams();
+
+  const query = searchParams.get('query')||""
+  const categoryId = searchParams.get("categoryId") || "";
+  const [searchQuery, setSearchQuery] = useState(query);
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const url = new URL("/search", process.env.VERCEL_URL);
     const newQuery = searchQuery.trim();
     url.searchParams.set("query", encodeURIComponent(newQuery));
+    if (categoryId) {
+      url.searchParams.set("categoryId", categoryId);
+    }
     if (newQuery === "") {
       url.searchParams.delete("");
     }

@@ -1,6 +1,7 @@
 import VideoView from "@/components/views/studio/videos/VideoView";
 import { DEFAULT_LIMIT } from "@/constants";
 import { HydrateClient, trpc } from "@/trpc/server";
+export const dynamic = "force-dynamic";
 interface SingleVideoPageProps {
     params: Promise<{videoId:string}>
 }
