@@ -15,11 +15,15 @@ interface VideoMenuProps {
   variant?: "ghost" | "secondary";
   onRemove?: () => void;
 }
-const VideoMenu = ({ videoId, variant, onRemove }: VideoMenuProps) => {
-  const onShare = ()=>{
-    navigator.clipboard.writeText(`${BASE_URL}/${videoId}`)
-    toast.success("Link copied to the clipboard")
-  }
+const VideoMenu = ({
+  videoId,
+  variant = "ghost",
+  onRemove,
+}: VideoMenuProps) => {
+  const onShare = () => {
+    navigator.clipboard.writeText(`${BASE_URL}/${videoId}`);
+    toast.success("Link copied to the clipboard");
+  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

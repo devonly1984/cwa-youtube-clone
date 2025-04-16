@@ -1,7 +1,7 @@
 "use client"
 
 import InfiniteScroll from "@/components/shared/InfiniteScroll";
-import VideoSectionsSkeleton from "@/components/skeletons/VideoSectionsSkeleton";
+import { VideoSectionsSkeleton } from "@/components/shared/skeletons";
 import VideosTable from "@/components/tables/studio/VideosTable";
 import { DEFAULT_LIMIT } from "@/constants";
 import { trpc } from "@/trpc/client";

@@ -1,6 +1,6 @@
 "use client";
 
-import VideoFormSkeleton from "@/components/skeletons/VideoFormSkeleton";
+import { VideoFormSkeleton } from "@/components/shared/skeletons";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { Suspense, useState } from "react";

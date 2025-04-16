@@ -7,7 +7,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import {VideoBanner,VideoTopRow} from '@/components/subsections/videos'
 import { toast } from "sonner";
 import { useAuth } from "@clerk/nextjs";
-import VideoSectionSkeleton from "@/components/skeletons/VideoSectionSkeleton";
+import { VideoSectionSkeleton } from "@/components/shared/skeletons";
 
 interface VideosSectionProps {
   videoId: string;

@@ -1,4 +1,5 @@
 import {
+  foreignKey,
   integer,
   pgEnum,
   pgTable,
@@ -163,10 +164,19 @@ export const comments = pgTable("comments", {
   videoId: uuid("video_id")
     .references(() => videos.id, { onDelete: "cascade" })
     .notNull(),
+  parentId: uuid("parent_id"),
   value: text("value").notNull(),
 
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
+},t=>{
+  return [
+    foreignKey({
+      columns: [t.parentId],
+      foreignColumns: [t.id],
+      name: "comments_parent_id_fkey",
+    }).onDelete("cascade"),
+  ];
 });
 
 
@@ -295,5 +305,13 @@ export const commentRelations = relations(comments, ({ one, many }) => ({
     fields: [comments.videoId],
     references: [videos.id],
   }),
+  parent: one(comments, {
+    fields: [comments.parentId],
+    references: [comments.id],
+    relationName: "comments_parent_id_fkey",
+  }),
   reactions: many(commentReactions),
+  replies: many(comments, {
+    relationName: "comments_parent_id_fkey",
+  }),
 }));

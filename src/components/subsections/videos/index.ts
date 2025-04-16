@@ -1,5 +1,5 @@
-export {default as CommentSection} from './CommentSection'
-export {default as SuggestionsSection} from './SuggestionsSection'
+export {default as CommentSection} from '../../sections/comments/CommentSection'
+export {default as SuggestionsSection} from '../../sections/suggestions/SuggestionsSection'
 export {default as VideoBanner} from './VideoBanner'
 export {default as VideoDescription} from './VideoDescription'
 export {default as VideoOwner} from './VideoOwner'

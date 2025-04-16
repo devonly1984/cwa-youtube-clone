@@ -94,3 +94,26 @@ export const userInfoVariants = cva("flex items-center gap-1", {
     size: "default",
   },
 });
+
+export const videoRowCardVariants = cva('group flex min-w-0',{
+  variants: {
+    size: {
+      default: 'gap-4',
+      compact:'gap-2'
+    },
+    defaultVariants: {
+      size: 'default'
+    }
+  }
+})
+export const thumbnailVariants = cva("relative flex-none", {
+  variants: {
+    size: {
+      default: "w-[38%]",
+      compact: "w-[168px]",
+    },
+    default: {
+      size: "default",
+    },
+  },
+});

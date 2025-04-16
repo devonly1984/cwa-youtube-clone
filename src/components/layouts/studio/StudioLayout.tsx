@@ -1,12 +1,11 @@
 import { StudioNavbar } from "@/components/navbars/studio/StudioNavbar";
 import StudioSidebar from "@/components/sidebars/studio/StudioSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { ReactNode } from "react";
+import { LayoutProps } from "@/types";
 
-interface StudioLayoutProps {
-  children: ReactNode;
-}
-const StudioLayout = ({ children }: StudioLayoutProps) => {
+
+
+const StudioLayout = ({ children }: LayoutProps) => {
   return (
     <SidebarProvider>
       <div className="w-full">

@@ -1,9 +1,12 @@
 "use client";
 
-import CommentForm from "@/components/forms/comments/CommentForm";
-import CommentItem from "@/components/forms/comments/CommentItem";
+import {
+  CommentItem,
+ 
+  CommentForm,
+} from "@/components/forms/comments";
 import InfiniteScroll from "@/components/shared/InfiniteScroll";
-import CommentsSkeleton from "@/components/skeletons/CommentsSkeleton";
+import { CommentsSkeleton } from "@/components/shared/skeletons";
 import { DEFAULT_LIMIT } from "@/constants";
 import { trpc } from "@/trpc/client";
 import { Suspense } from "react";

@@ -1,4 +1,4 @@
-import CategoriesSection from "@/components/sections/home/CategoriesSection";
+import {CategoriesSection} from "@/components/sections/home";
 
 
 interface HomeViewProps {

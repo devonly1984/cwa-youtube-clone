@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { trpc } from "@/trpc/client";
-import { MoreVerticalIcon, TrashIcon } from "lucide-react";
+import { MoreVerticalIcon, RotateCcwIcon, TrashIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 interface StudioDropDownProps {
@@ -29,6 +29,16 @@ const StudioDropDown = ({videoId}:StudioDropDownProps) => {
       }
     }
   )
+  const revalidate = trpc.videos.revalidate.useMutation({
+    onSuccess: () => {
+      utils.studio.getMany.invalidate();
+      utils.studio.getOne.invalidate({ id: videoId });
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error("Something went wrong", { description: error.message });
+    },
+  });
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -37,6 +47,10 @@ const StudioDropDown = ({videoId}:StudioDropDownProps) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => revalidate.mutate({ id: videoId })}>
+          <RotateCcwIcon className="size-4 mr-2" />
+          Revalidate
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={() => remove.mutate({ id: videoId })}>
           <TrashIcon className="size-4 mr-2" />
           Delete

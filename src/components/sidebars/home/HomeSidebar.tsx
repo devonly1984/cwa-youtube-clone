@@ -1,7 +1,6 @@
-import MainSection from "@/components/sections/home/MainSection";
-import PersonalSection from "@/components/sections/home/PersonalSection";
+import { MainSection, PersonalSection } from "@/components/sections/home";
 import { Separator } from "@/components/ui/separator";
-import { Sidebar, SidebarContent } from "@/components/ui/sidebar"
+import { Sidebar, SidebarContent } from "@/components/ui/sidebar";
 
 const HomeSidebar = () => {
   return (
@@ -13,5 +12,5 @@ const HomeSidebar = () => {
       </SidebarContent>
     </Sidebar>
   );
-}
-export default HomeSidebar
+};
+export default HomeSidebar;

@@ -6,7 +6,7 @@ interface InputType {
   userId:string;
   videoId:string;
 }
- const  POST  = serve(
+ export const  POST  = serve(
   async (context) => {
     const input = context.requestPayload as InputType;
     const {userId,videoId}= input;
@@ -27,4 +27,3 @@ interface InputType {
   
   }
 )
-export default POST;
